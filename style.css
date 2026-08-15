@@ -1,0 +1,263 @@
+:root {
+    --primary: #3b82f6;
+    /* Blue from logo */
+    --accent-yellow: #fde047;
+    /* Yellow from logo */
+    --accent-orange: #fb923c;
+    /* Orange from logo */
+    --accent-green: #4ade80;
+    /* Green from logo */
+    --bg: #030712;
+    /* Near black */
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Background Canvas Container */
+#star-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a:hover {
+    color: var(--accent-yellow);
+}
+
+/* Hero Section */
+header.hero {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    background: url('header') center/cover no-repeat;
+    padding: 2rem;
+    margin-bottom: 6rem;
+}
+
+/* Mask for header to fade into background */
+header.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, var(--bg), transparent);
+    z-index: 1;
+}
+
+header.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(15, 23, 42, 0.2), var(--bg) 95%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeReveal 1s forwards ease-out 0.2s;
+}
+
+.logo-container {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.logo-main {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(59, 130, 246, 0.4);
+    animation: floatingLogo 6s ease-in-out infinite;
+}
+
+header.hero h1 {
+    font-size: 5rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #fff 0%, var(--accent-yellow) 50%, var(--accent-orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(253, 224, 71, 0.3));
+}
+
+@keyframes floatingLogo {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+@keyframes fadeReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Premium Glassmorphism */
+.glass {
+    background: rgba(30, 41, 59, 0.65);
+    /* Increased opacity for stability */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 2rem;
+    position: relative;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Removed noise filter as it might cause rendering glitches */
+/* .glass::before { ... } */
+
+/* Animated Border for Cards */
+.app-card {
+    padding: 3rem;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    /* Center content for better balance */
+}
+
+.app-card:hover {
+    transform: scale(1.02) translateY(-10px);
+    border-color: rgba(253, 224, 71, 0.3);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* Buttons */
+.btn-small {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    border: 1px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    border-radius: 100px;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.4s;
+}
+
+.btn-small::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: var(--primary);
+    z-index: -1;
+    transition: height 0.3s;
+}
+
+.btn-small:hover {
+    color: white;
+}
+
+.btn-small:hover::after {
+    height: 100%;
+}
+
+/* Reveal on Scroll Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+footer {
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    color: var(--text-dim);
+    font-size: 1rem;
+}
+
+/* Content Page Elements */
+.content-page {
+    padding: 8rem 2rem;
+    max-width: 900px;
+    margin: auto;
+}
+
+.content-page h1 {
+    font-size: 3.5rem;
+    color: var(--accent-yellow);
+    margin-bottom: 1rem;
+}
+
+.content-page h2 {
+    border-left: 5px solid var(--primary);
+    padding-left: 1.5rem;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    header.hero h1 {
+        font-size: 3rem;
+    }
+}
